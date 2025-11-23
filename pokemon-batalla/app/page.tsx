@@ -28,7 +28,6 @@ export default function BattleScreen() {
     return () => window.removeEventListener("resize", checkOrientation);
   }, []);
 
-  // ✅ SI ESTÁ EN VERTICAL → NADA DEL JUEGO SE RENDERIZA
   if (isPortrait) {
     return (
       <div className="w-screen h-screen bg-black flex items-center justify-center">
@@ -66,9 +65,9 @@ export default function BattleScreen() {
     setHp(prev => ({ ...prev, charmander: Math.max(0, prev.charmander - dmg) }));
     setLog(`¡Pikachu usó ${move}! Causó ${dmg} de daño.`);
 
-    setTimeout(() => { 
-      setAtkPika(false); 
-      setHitChar(false); 
+    setTimeout(() => {
+      setAtkPika(false);
+      setHitChar(false);
     }, 350);
 
     setTimeout(() => {
@@ -163,43 +162,73 @@ export default function BattleScreen() {
           </div>
         </div>
 
-        <div className="h-[90px] bg-black/60 border-t border-white/30 backdrop-blur-sm text-white p-2 text-center font-bold text-sm whitespace-pre-line">
+        {/* MENSAJES */}
+        <div className="h-[90px] bg-black/70 border-t border-white/30 backdrop-blur-sm text-white p-3 text-center font-bold text-base whitespace-pre-line tracking-wide">
           {log}
         </div>
 
-        <div className="h-[180px] bg-black/50 border-t border-white/30 backdrop-blur-sm p-4">
-          <div className="grid grid-cols-2 gap-3 text-lg font-bold text-white">
-            {["Impactrueno", "Rapidez", "Placaje", "Onda Trueno"].map((atk) => (
+        {/* ✅ BOTONES MEJORADOS */}
+        <div className="h-[180px] bg-black/60 border-t border-white/30 backdrop-blur-sm p-3">
+          <div className="grid grid-cols-2 gap-4 text-white text-lg font-bold h-full">
+
+            {["Impactrueno", "Rapidez", "Placaje", "Onda Trueno"].map((atk, index) => (
               <button
                 key={atk}
                 onClick={() => handleAttack(atk)}
                 disabled={animating}
-                className="border-2 border-white/40 p-3 rounded hover:bg-white/20 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                className={`
+                  border-2 border-white/60
+                  rounded-xl
+                  flex items-center justify-center
+                  touch-manipulation
+                  active:scale-95
+                  transition-all
+                  duration-100
+                  ${
+                    index === 0
+                      ? "bg-yellow-500/20 hover:bg-yellow-500/40"
+                      : index === 1
+                      ? "bg-blue-500/20 hover:bg-blue-500/40"
+                      : index === 2
+                      ? "bg-green-500/20 hover:bg-green-500/40"
+                      : "bg-purple-500/20 hover:bg-purple-500/40"
+                  }
+                  disabled:opacity-40
+                  disabled:cursor-not-allowed
+                `}
               >
                 {atk.toUpperCase()}
               </button>
             ))}
+
           </div>
         </div>
       </div>
 
       <style jsx>{`
         .pikachu-wrapper, .enemy-wrapper { display: inline-block; will-change: transform; }
-        .attack-dash { animation: dash 0.35s ease-out forwards; }
+
+        .attack-dash {
+          animation: dash 0.35s ease-out forwards;
+        }
         @keyframes dash { 
           0% { transform:translateX(0); } 
           40% { transform:translateX(90px); } 
           100% { transform:translateX(0); } 
         }
 
-        .attack-dash-enemy { animation: dash-enemy 0.35s ease-out forwards; }
+        .attack-dash-enemy {
+          animation: dash-enemy 0.35s ease-out forwards;
+        }
         @keyframes dash-enemy { 
           0% { transform:translateX(0); } 
           40% { transform:translateX(-90px); } 
           100% { transform:translateX(0); } 
         }
 
-        .hit-shake { animation: shake 0.25s linear; }
+        .hit-shake {
+          animation: shake 0.25s linear;
+        }
         @keyframes shake { 
           0% { transform:translateX(0); } 
           25% { transform:translateX(-8px); } 
