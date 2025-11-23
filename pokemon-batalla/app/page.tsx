@@ -168,7 +168,7 @@ export default function BattleScreen() {
         </div>
 
         {/* ✅ BOTONES MEJORADOS */}
-        <div className="h-[180px] bg-black/60 border-t border-white/30 backdrop-blur-sm p-3">
+<div className="h-[140px] -mt-10 bg-black/60 border-t border-white/30 backdrop-blur-sm p-3 relative">
           <div className="grid grid-cols-2 gap-4 text-white text-lg font-bold h-full">
 
             {["Impactrueno", "Rapidez", "Placaje", "Onda Trueno"].map((atk, index) => (
